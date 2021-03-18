@@ -25,3 +25,18 @@ firebase.initializeApp(firebaseConfig);
 
 ## Route 생성
 - `npm install --save react-router-dom`
+- 로그인이 안 된 상태면 `Auth.js` 파일로 `route`.
+- 로그인이 된 상태면 `Home.js` 파일로 `route`.
+
+
+## 로그인 구현
+- firebase 파일에서 `firebase.auth()` 를 초기화해서 firebase의 `auth` 모듈에 접근한다.
+```
+export const authService = firebase.auth();
+```
+- 사용하고자 하는 파일에서 `import` 해준다.
+```
+import { authService } from "fbase";
+```
+- `authService.currentuser` 값이 `null` 이면 로그인이 안 된 상태를 나타낸다.
+- Firebase 콘솔 - 빌드 - Authentication 에서 로그인 방법을 직접 설정해준다.
