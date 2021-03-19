@@ -40,3 +40,5 @@ import { authService } from "fbase";
 ```
 - `authService.currentuser` 값이 `null` 이면 로그인이 안 된 상태를 나타낸다.
 - Firebase 콘솔 - 빌드 - Authentication 에서 로그인 방법을 직접 설정해준다.
+- 회원가입이 안 돼있으면 회원가입 후 로그인을 해주는 `createUserWithEmailAndPassword` 메소드 사용
+- 회원가입이 돼있으면 로그인을 해주는 `signInWithEmailAndPassword` 메소드 사용
