@@ -29,7 +29,7 @@ firebase.initializeApp(firebaseConfig);
 - 로그인이 된 상태면 `Home.js` 파일로 `route`.
 
 
-## 로그인 구현
+## 로그인/로그아웃 구현
 - firebase 파일에서 `firebase.auth()` 를 초기화해서 firebase의 `auth` 모듈에 접근한다.
 ```
 export const authService = firebase.auth();
@@ -42,3 +42,7 @@ import { authService } from "fbase";
 - Firebase 콘솔 - 빌드 - Authentication 에서 로그인 방법을 직접 설정해준다.
 - 회원가입이 안 돼있으면 회원가입 후 로그인을 해주는 `createUserWithEmailAndPassword` 메소드 사용
 - 회원가입이 돼있으면 로그인을 해주는 `signInWithEmailAndPassword` 메소드 사용
+- 유저상태에 변화가 있을 때 알아차릴 수 있는 `onAuthStateChanged` 메소드 사용
+- 주의 : firebase가 초기화되는데 시간이 걸리기 때문에 useEffect() 메소드 사용
+- 다른 이메일 계정 사용할 때 `signInWithPopup` 메소드 사용
+- 로그아웃 메소드 `signOut`을 사용하여 로그아웃
