@@ -126,3 +126,34 @@ const onDeleteClick = async () => {
   }
 };
 ```
+
+## Adding Images
+- `input` 으로 이미지를 받는다.
+```
+<input type="file" accept="image/*" onChange={onFileChange} />
+```
+- `FileReader.onloadend` 의 `event` 를 이용해서 `image` 의 텍스트 형태인 `result` 값을 attachment `state`에 저장한다.
+```
+const onFileChange = (event) => {
+  const {
+    target: { files },
+  } = event;
+  const theFile = files[0];
+  const reader = new FileReader();
+  reader.onloadend = (finishedEvent) => {
+  const {currentTarget: { result }} = finishedEvent;
+  setAttachment(result);
+  };
+  reader.readAsDataURL(theFile);
+};
+```
+- 위에서 저장한 `image` 의 텍스트 형태인 `attachment` 를 통해 이미지를 출력한다.
+- 이미지 삭제는 `setAttachment(null)` 로 간단하게 가능하다.
+```
+{attachment && (
+  <div>
+    <img src={attachment} width="50px" height="50px" />
+    <button onClick={onClearAttachment}>Clear</button>
+  </div>
+)}
+```
