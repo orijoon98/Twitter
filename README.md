@@ -148,7 +148,6 @@ const onFileChange = (event) => {
 };
 ```
 - 위에서 저장한 `image` 의 텍스트 형태인 `attachment` 를 통해 이미지를 출력한다.
-- 이미지 삭제는 `setAttachment(null)` 로 간단하게 가능하다.
 ```
 {attachment && (
   <div>
@@ -156,4 +155,40 @@ const onFileChange = (event) => {
     <button onClick={onClearAttachment}>Clear</button>
   </div>
 )}
+```
+- 이미지가 있을 경우에 `firebase`의 `storage` 모듈의 `child` 메소드를 이용해 파일을 `storage`에 저장한다.
+- `putString`을 이용해 `attachment`를 저장한다.
+- `getDownloadURL`을 이용해 이미지를 불러온다.
+```
+const onSubmit = async (event) => {
+  event.preventDefault();
+  let attachmentUrl = "";
+  if(attachment != ""){
+    const attachmentRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
+    const response = await attachmentRef.putString(attachment, "data_url");
+    attachmentUrl = await response.ref.getDownloadURL();
+  };
+  const tweetObj = {
+    text: tweet,
+    createdAt: Date.now(),
+    creatorId: userObj.uid,
+    attachmentUrl
+  };
+  await dbService.collection("tweets").add(tweetObj);
+  setTweet("");
+  setAttachment("");
+};
+```
+
+## Deleting Images
+- `delete` 버튼을 클릭하면 `window.confirm`을 이용해 알림창이 떠서 확인/취소를 클릭할 수 있다.
+- `storage` 모듈의 `refFromURL` 메소드를 이용해 `attachmentUrl` 로 특정 이미지 파일을 지정해서 `delete` 메소드로 삭제한다.
+```
+const onDeleteClick = async () => {
+  const ok = window.confirm("Are you sure you want to delete this tweet?");
+  if(ok){
+    await dbService.doc(`tweets/${tweetObj.id}`).delete();
+    await storageService.refFromURL(tweetObj.attachmentUrl).delete();
+  }
+};
 ```
