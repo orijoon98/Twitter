@@ -25,8 +25,8 @@ firebase.initializeApp(firebaseConfig);
 
 ## Route 생성
 - `npm install --save react-router-dom`
-- 로그인이 안 된 상태면 `Auth.js` 파일로 `route`.
-- 로그인이 된 상태면 `Home.js` 파일로 `route`.
+- 로그인이 안 된 상태면 `Auth.js` 파일로 `route`
+- 로그인이 된 상태면 `Home.js` 파일로 `route`
 
 
 ## 로그인/로그아웃 구현
